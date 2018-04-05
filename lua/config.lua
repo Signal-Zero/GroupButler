@@ -44,6 +44,7 @@ local _M =
 	{
 		host = os.getenv('REDIS_HOST') or 'localhost',
 		port = os.getenv('REDIS_PORT') or 6379,
+		password = os.getenv('REDIS_PASSWORD') or 6379,
 		db = os.getenv('REDIS_DB') or 0
 	},
 

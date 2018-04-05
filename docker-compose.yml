@@ -17,6 +17,7 @@ services:
       - POSTGRES_DB
       - REDIS_HOST
       - REDIS_PORT
+      - REDIS_PASSWORD
       - REDIS_DB
       - SOURCE
       - SUPERADMINS
