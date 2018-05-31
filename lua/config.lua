@@ -10,6 +10,27 @@ local function read_secret(path)
 	return content
 end
 
+local function string:split(delimiter)
+  local result = { }
+  local from  = 1
+  local delim_from, delim_to = string.find( self, delimiter, from  )
+  while delim_from do
+    table.insert( result, string.sub( self, from , delim_from-1 ) )
+    from  = delim_to + 1
+    delim_from, delim_to = string.find( self, delimiter, from  )
+  end
+  table.insert( result, string.sub( self, from  ) )
+  return result
+end
+
+tbl = os.getenv('REDIS_URL'):split(":")
+creds = tbl[3]
+
+creds_tbl = creds:split("@")
+redis_port = tbl[4]
+redis_pass = creds_tbl[1]
+redis_host = creds_tbl[2]
+
 local _M =
 {
 	-- Getting updates
@@ -42,9 +63,9 @@ local _M =
 	},
 	redis =
 	{
-		host = os.getenv('REDIS_HOST') or 'localhost',
-		port = os.getenv('REDIS_PORT') or 6379,
-		password = os.getenv('REDIS_PASSWORD') or 6379,
+		host = redis_host or 'localhost',
+		port = redis_port or 6379,
+		password = redis_pass or 6379,
 		db = os.getenv('REDIS_DB') or 0
 	},
 
